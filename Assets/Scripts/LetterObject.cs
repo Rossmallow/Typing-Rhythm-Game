@@ -22,7 +22,7 @@ public class LetterObject : MonoBehaviour {
         if (canBePressed && Input.GetKeyDown(alphaNumeric)) {
             if ((shiftModifier && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) ||
                 (!shiftModifier && (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)))) {
-                GameManager.gameManager.LetterHit(transform.position.x, alphaNumeric);
+                GameManager.gameManager.LetterHit(transform.position.x);
                 DisableLetter();
             }
         }
@@ -40,7 +40,7 @@ public class LetterObject : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other) {
         if (other.tag == "TypeArea" && spriteRenderer.isVisible) {
             canBePressed = false;
-            GameManager.gameManager.LetterMissed(alphaNumeric);
+            GameManager.gameManager.LetterMissed();
         }
         if (other.tag == "GameRenderer") {
             Destroy(gameObject);

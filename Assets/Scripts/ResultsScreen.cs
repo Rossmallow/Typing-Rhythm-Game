@@ -7,11 +7,11 @@ using UnityEngine.UI;
 public class ResultsScreen : MonoBehaviour {
 
     public TextMeshProUGUI scoreText, totalNotesText, perfectlyHitNotesText, normallyHitNotesText, missedNotesText, longestStreakText, longestPerfectStreakText;
-    public GameObject optionsHolder, resultsHolder;
+    public GameObject uiHolder, resultsHolder;
 
     public void EnableScreen(bool enable) {
         gameObject.SetActive(enable);
-        optionsHolder.SetActive(enable);
+        uiHolder.SetActive(enable);
         resultsHolder.SetActive(enable);
     }
 

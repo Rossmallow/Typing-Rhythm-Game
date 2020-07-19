@@ -15,15 +15,6 @@ public class TypeArea : MonoBehaviour {
         sprite = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    //void Update() {
-    //    if (Input.anyKey) {
-    //        sprite.sprite = actionSprite;
-    //    } else {
-    //        sprite.sprite = defaultSprite;
-    //    }    
-    //}
-
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.tag == "Letter") {
             sprite.sprite = actionSprite;

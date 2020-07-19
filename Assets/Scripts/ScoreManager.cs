@@ -8,35 +8,24 @@ public class ScoreManager : MonoBehaviour {
     public HeadsUpDisplay headsUpDisplay;
     public ResultsScreen resultsScreen;
     
-    private int score;
-    private int scorePerNote;
+    private int score = GameManager.score;
+    private int scorePerNote = 10;
     private int scorePerPerfectNote;
-    private int scoreMultiplier;
-    private int[] multiplierThreasholds;
+    private int scoreMultiplier = 1;
+    private int[] multiplierThreasholds = new int[] { 20, 40, 100 };
     private int totalNotes;
-    private int normalHits;
-    private int perfectHits;
-    private int missedNotes;
-    private int currentStreak;
-    private int currentPerfectStreak;
-    private int longestStreak;
-    private int longestPrefectStreak;
+    private int normalHits = 0;
+    private int perfectHits = 0;
+    private int missedNotes = 0;
+    private int currentStreak = 0;
+    private int currentPerfectStreak = 0;
+    private int longestStreak = 0;
+    private int longestPrefectStreak = 0;
 
     // Start is called before the first frame update
     private void Start() {
-        score = GameManager.score;
-        scorePerNote = 10;
         scorePerPerfectNote = scorePerNote * 2;
-        scoreMultiplier = 1;
-        multiplierThreasholds = new int[3] {20, 40, 100};
         totalNotes = FindObjectsOfType<LetterObject>().Length;
-        normalHits = 0;
-        perfectHits = 0;
-        missedNotes = 0;
-        currentStreak = 0;
-        currentPerfectStreak = 0;
-        longestStreak = currentStreak;
-        longestPrefectStreak = currentPerfectStreak;
         headsUpDisplay.SetMultiplier(scoreMultiplier);
         headsUpDisplay.SetStreak(currentStreak);
         resultsScreen.EnableScreen(false);
@@ -45,24 +34,30 @@ public class ScoreManager : MonoBehaviour {
     public int AddScore(string hitType = "normal") {
         if (hitType == "perfect") {
             score += scorePerPerfectNote * scoreMultiplier;
+        } else {
+            score += scorePerNote * scoreMultiplier;
+        }
+
+        if (hitType == "perfect") {
             perfectHits++;
             currentPerfectStreak++;
             if (currentPerfectStreak > longestPrefectStreak) {
                 longestPrefectStreak = currentPerfectStreak;
             }
         } else {
-            score += scorePerNote * scoreMultiplier;
             normalHits++;
         }
         currentStreak++;
         headsUpDisplay.SetStreak(currentStreak);
+        if (currentStreak > longestStreak) {
+            longestStreak = currentStreak;
+        }
+
         if (scoreMultiplier <= multiplierThreasholds.Length && multiplierThreasholds[scoreMultiplier - 1] <= currentStreak) {
             scoreMultiplier++;
             headsUpDisplay.SetMultiplier(scoreMultiplier);
         }
-        if (currentStreak > longestStreak) {
-            longestStreak = currentStreak;
-        }
+
         return score;
     }
 
@@ -76,7 +71,6 @@ public class ScoreManager : MonoBehaviour {
     }
 
     public void GameOver() {
-        int missedNotes = totalNotes - perfectHits + normalHits;
         resultsScreen.SetValues(totalNotes, perfectHits, normalHits, missedNotes, longestStreak, longestPrefectStreak);
         resultsScreen.EnableScreen(true);
     }

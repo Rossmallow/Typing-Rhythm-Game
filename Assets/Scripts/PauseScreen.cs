@@ -10,20 +10,15 @@ public class PauseScreen : MonoBehaviour {
 
     public TextMeshProUGUI titleText;
     public GameObject countdownAnimation;
-    public GameObject buttonsHolder;
-    public Slider volumeSlider, speedSlider;
+    public GameObject uiHolder;
 
     public void EnableMenu(bool enable) {
         gameObject.SetActive(enable);
-        EnableButtonsHolder(enable);
-        if (enable) {
-            volumeSlider.value = GameManager.gameVolume;
-            speedSlider.value = GameManager.gameSpeed;
-        }
+        EnableUIHolder(enable);
     }
 
-    public void EnableButtonsHolder(bool enable) {
-        buttonsHolder.SetActive(enable);
+    public void EnableUIHolder(bool enable) {
+        uiHolder.SetActive(enable);
     }
 
     public void ShowCountdown() {
