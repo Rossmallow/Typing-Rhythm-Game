@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 1916672562309545162}
   - component: {fileID: 1916672562309545167}
   m_Layer: 0
-  m_Name: UI_Continue_Button
+  m_Name: UI_Button_Continue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,6 +470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameText: {fileID: 1916672561248952645}
+  uiName: Continue
+  typeIndex: 0
   letterHighlights:
   - {fileID: 1916672561054686141}
   - {fileID: 1916672561542368776}

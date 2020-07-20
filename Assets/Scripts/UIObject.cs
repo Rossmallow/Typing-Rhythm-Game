@@ -34,5 +34,5 @@ public abstract class UIObject : MonoBehaviour {
 
     public abstract float Backspace();
 
-    public abstract void TurnOffHighlights();
+    public abstract float EnableAllHighlights(bool enable);
 }

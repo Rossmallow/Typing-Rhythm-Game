@@ -21,10 +21,18 @@ public class SliderObject : UIObject {
 
     public override float Backspace() {
         typeIndex--;
-        return sliderValues[typeIndex];
+        if (typeIndex > 0) {
+            return sliderValues[typeIndex - 1];
+        } else {
+            return 0f;
+        }
     }
 
-    public override void TurnOffHighlights() {
-
+    public override float EnableAllHighlights(bool enable) {
+        if (enable) {
+            typeIndex = uiName.Length;
+            return sliderValues[typeIndex - 1];
+        }
+        return -1f;
     }
 }

@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 3039573343179943520}
   - component: {fileID: 4663288384143380400}
   m_Layer: 0
-  m_Name: UI_About_Button
+  m_Name: UI_Button_About
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -541,6 +541,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameText: {fileID: 3039573342384847319}
+  uiName: About
+  typeIndex: 0
   letterHighlights:
   - {fileID: 2356280569836901592}
   - {fileID: 2858074596037883127}

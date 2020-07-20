@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 3713825135521764232}
   - component: {fileID: 3713825135521764277}
   m_Layer: 0
-  m_Name: UI_Quit_Button
+  m_Name: UI_Button_Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,6 +466,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameText: {fileID: 3713825134768368086}
+  uiName: Quit
+  typeIndex: 0
   letterHighlights:
   - {fileID: 3713825134953022088}
   - {fileID: 3713825136243532638}

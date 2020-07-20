@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\BarObject.cs" />
     <Compile Include="Assets\Scripts\ButtonObject.cs" />
     <Compile Include="Assets\Scripts\EffectObject.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />

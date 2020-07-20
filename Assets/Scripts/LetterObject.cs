@@ -19,7 +19,7 @@ public class LetterObject : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
-        if (canBePressed && Input.GetKeyDown(alphaNumeric)) {
+        if (!GameManager.isPaused && canBePressed && Input.GetKeyDown(alphaNumeric)) {
             if ((shiftModifier && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))) ||
                 (!shiftModifier && (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift)))) {
                 GameManager.gameManager.LetterHit(transform.position.x);

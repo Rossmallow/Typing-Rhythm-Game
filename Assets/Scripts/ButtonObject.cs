@@ -13,7 +13,7 @@ public class ButtonObject : UIObject {
     private void Start() {
         uiName = uiNameText.text;
         typeIndex = 0;
-        TurnOffHighlights();
+        EnableAllHighlights(false);
     }
 
     public override float TypeLetter() {
@@ -28,9 +28,15 @@ public class ButtonObject : UIObject {
         return -1f;
     }
 
-    public override void TurnOffHighlights() {
-        foreach (GameObject highlight in letterHighlights) {
-            highlight.SetActive(false);
+    public override float EnableAllHighlights(bool enable) {
+        if (enable) {
+            typeIndex = uiName.Length;
+        } else {
+            typeIndex = 0;
         }
+        foreach (GameObject highlight in letterHighlights) {
+            highlight.SetActive(enable);
+        }
+        return -1f;
     }
 }

@@ -25,10 +25,8 @@ public class UserInterface : MonoBehaviour {
 
     public void SetSlider(string sliderToSet, float newSliderValue) {
         if (sliderToSet == "Volume") {
-            Debug.Log("Setting volume to " + newSliderValue);
             volumeSlider.value = newSliderValue;
         } else if (sliderToSet == "Speed") {
-            Debug.Log("Setting speed to " + newSliderValue);
             speedSlider.value = newSliderValue;
         }
     }
@@ -47,6 +45,7 @@ public class UserInterface : MonoBehaviour {
     }
 
     public void RestartGame() {
+        GameManager.isRestarted = true;
         SceneManager.LoadScene("Main");
     }
 
@@ -58,6 +57,10 @@ public class UserInterface : MonoBehaviour {
         aboutScreen.SetActive(enable);
         pauseContents.SetActive(!enable);
         resultsContents.SetActive(!enable);
+    }
+
+    public bool AboutScreenIsActive() {
+        return aboutScreen.activeSelf;
     }
 
     public void CheckKey(char letter) {
@@ -86,6 +89,12 @@ public class UserInterface : MonoBehaviour {
         }
     }
 
+    public void CompleteTyping() {
+        if (hasactiveUI) {
+            SetSlider(activeName, activeUI.EnableAllHighlights(true));
+        }
+    }
+
     private void ExecuteUI () {
         if (hasactiveUI) {
             switch (activeName) {
@@ -111,7 +120,7 @@ public class UserInterface : MonoBehaviour {
                     EnableAboutScreen(false);
                     break;
             }
-            activeUI.TurnOffHighlights();
+            activeUI.EnableAllHighlights(false);
             activeUI.ResetIndex();
             hasactiveUI = false;
         }
@@ -121,7 +130,6 @@ public class UserInterface : MonoBehaviour {
         if (hasactiveUI) {
             SetSlider(activeName, activeUI.Backspace());
             if (activeUI.GetCurrentIndex() == 0) {
-                SetSlider(activeName, 0);
                 hasactiveUI = false;
             }
         }

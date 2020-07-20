@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 6807254864176819741}
   - component: {fileID: 2011096380759881334}
   m_Layer: 0
-  m_Name: UI_Restart_Button
+  m_Name: UI_Button_Restart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,6 +440,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameText: {fileID: 6807254864564573756}
+  uiName: Restart
+  typeIndex: 0
   letterHighlights:
   - {fileID: 2071715968700011738}
   - {fileID: 6824174008295659346}

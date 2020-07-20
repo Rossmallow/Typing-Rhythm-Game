@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 4323526130845736105}
   - component: {fileID: 4323526130845736110}
   m_Layer: 0
-  m_Name: UI_Back_Button
+  m_Name: UI_Button_Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -540,6 +540,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiNameText: {fileID: 4323526129677623040}
+  uiName: Back
+  typeIndex: 0
   letterHighlights:
   - {fileID: 4323526131127393728}
   - {fileID: 4323526130556978917}

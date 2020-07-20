@@ -38,12 +38,4 @@ public class TypeArea : MonoBehaviour {
     public void SpawnMissEffect() {
         Instantiate(missEffect, transform.position, transform.rotation);
     }
-
-    public void TogglePause() {
-        if (GameManager.isPaused) {
-            GetComponent<CircleCollider2D>().isTrigger = false;
-        } else {
-            GetComponent<CircleCollider2D>().isTrigger = true;
-        }
-    }
 }

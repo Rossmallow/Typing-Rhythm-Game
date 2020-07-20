@@ -7,8 +7,9 @@ using UnityEngine.SocialPlatforms.Impl;
 public class GameManager : MonoBehaviour {
 
     public static GameManager gameManager;
-    public static int score = 0;
-    public static bool isPaused = false;
+    public static int score;
+    public static bool isPaused;
+    public static bool isRestarted = false;
     public static float gameSpeed = 1f;
     public static float gameVolume = 0.5f;
 
@@ -16,17 +17,19 @@ public class GameManager : MonoBehaviour {
     public AudioSource music;
     public NoteScroller noteScroller;
     public PauseScreen pauseScreen;
-    public GameObject aboutScreen;
     public TypeArea typeArea;
     public UserInterface userInterface;
 
     private bool gameStarted = false;
     private bool gameOver = false;
     private bool unpausing = false;
+    private bool restarting = false;
 
     // Start is called before the first frame update
     private void Start() {
         gameManager = this;
+        score = 0;
+        isPaused = false;
         UpdateMusic();
         pauseScreen.EnableMenu(false);
         userInterface.EnableAboutScreen(false);
@@ -35,33 +38,37 @@ public class GameManager : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         if (!gameStarted) {
-            if (Input.anyKeyDown) {
-                gameStarted = true;
-                noteScroller.EnableScrolling(true);
-                music.Play();
+            if (isRestarted && !restarting) {
+                StartCoroutine(Restart());
+            } else if (Input.anyKeyDown) {
+                    noteScroller.EnableScrolling(true);
+                    music.Play();
+                    gameStarted = true;
             }
-        } else {
-            if (!music.isPlaying && !gameOver) {
-                gameOver = true;
+        } else if (!isPaused && !gameOver) {
+            if (!music.isPlaying) {
                 noteScroller.EnableScrolling(false);
                 scoreManager.GameOver();
+                gameOver = true;
+            } else if (Input.GetKeyDown(KeyCode.Escape)) {
+                Pause();
             }
-            if (aboutScreen.activeSelf && Input.GetKeyDown(KeyCode.Escape)) {
-                userInterface.EnableAboutScreen(false);
-            } else if (isPaused && !unpausing) {
-                if (Input.GetKeyDown(KeyCode.Escape) || userInterface.IsRequestingToResume()) {
+        } else if (isPaused && !unpausing || gameOver) {
+            bool resumeRequest = userInterface.IsRequestingToResume();
+            if (Input.GetKeyDown(KeyCode.Escape) || resumeRequest) {
+                if (userInterface.AboutScreenIsActive() && !resumeRequest) {
+                    userInterface.EnableAboutScreen(false);
+                } else if (!gameOver) {
                     userInterface.RequestAccepted();
                     StartCoroutine(Resume());
                 }
-            } 
-            if (!isPaused) {
-                if (Input.GetKeyDown(KeyCode.Escape) && !gameOver) {
-                    Pause();
-                }
-            }
-            if (gameOver || (isPaused && !unpausing)) {
-                foreach (char letter in Input.inputString) {
-                    userInterface.CheckKey(letter);
+            } else {
+                if (Input.GetKeyDown(KeyCode.Tab)) {
+                    userInterface.CompleteTyping();
+                } else {
+                    foreach (char letter in Input.inputString) {
+                        userInterface.CheckKey(letter);
+                    }
                 }
             }
         }
@@ -84,7 +91,6 @@ public class GameManager : MonoBehaviour {
 
     private void Pause() {
         isPaused = true;
-        typeArea.TogglePause();
         music.pitch = 0;
         pauseScreen.SetTitleText("Paused");
         userInterface.SetSlider("Volume", gameVolume);
@@ -99,12 +105,25 @@ public class GameManager : MonoBehaviour {
         pauseScreen.ShowCountdown();
         yield return new WaitForSeconds(3);
         isPaused = false;
-        typeArea.TogglePause();
         UpdateMusic();
         pauseScreen.EnableMenu(false);
         unpausing = false;
     }
     
+    private IEnumerator Restart() {
+        restarting = true;
+        pauseScreen.EnableMenu(true);
+        pauseScreen.EnableUIHolder(false);
+        pauseScreen.SetTitleText("Restarting in...");
+        pauseScreen.ShowCountdown();
+        yield return new WaitForSeconds(3);
+        pauseScreen.EnableMenu(false);
+        noteScroller.EnableScrolling(true);
+        music.Play();
+        gameStarted = true;
+        restarting = false;
+    }
+
     private void UpdateMusic () {
         music.pitch = gameSpeed;
         music.volume = gameVolume;
